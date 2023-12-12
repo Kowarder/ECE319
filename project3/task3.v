@@ -7,10 +7,9 @@ module task3(clk, reset, dready, data, dreq, rd);
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            PS <= A;
-            dreq <= 1;
+            PS <= A; //reset state
+            dreq <= 1; //reset signal
             rd <= 0;
-            // Other reset logic...
         end else begin
             PS <= NS;
         end
@@ -18,14 +17,19 @@ module task3(clk, reset, dready, data, dreq, rd);
 
     always @(PS or dready) begin
         case (PS)
+          //base on the FSM diagram
+          //state A if dready=1 start this cycle
             A: NS = (dready) ? B : A;
+          //state B means ready for the data
             B: NS = (dready) ? B : C;
+          //state C means read the data from sender
             C: NS = A;
         endcase
     end
 
     always @(PS) begin
         case (PS)
+          //each state's output
             A: begin
                 dreq = 1'b1;
                 rd = 1'b0;
@@ -40,17 +44,17 @@ module task3(clk, reset, dready, data, dreq, rd);
             end
         endcase
     end
-
+	//store the data which need to be stored in task3
     reg [7:0] write_data;
     always @(posedge clk) begin
         if (rd) write_data <= data;
     end
-
+	//open the file
     integer file;
     initial begin
         file = $fopen("task3.dat", "w");
     end
-
+	//write the file
     always @(posedge clk) begin
         if (rd) begin
             $fwrite(file, "%d\n", write_data);
