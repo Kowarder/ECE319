@@ -1,0 +1,47 @@
+
+module task3_tb();
+
+    reg clk, reset, dready;
+    reg [7:0] data;
+    wire dreq, rd;
+
+    task3 uut(
+        .clk(clk),
+        .reset(reset),
+        .dready(dready),
+        .data(data),
+        .dreq(dreq),
+        .rd(rd)
+    );
+
+    // Clock generation
+    always #5 clk = ~clk;
+
+    // Test sequence
+    initial begin
+        // Initialize signals
+        clk = 0;
+        reset = 1;
+        dready = 0;
+        data = 8'b00000000;
+
+        // Release reset
+        #10 reset = 0;
+
+        // Test sequence to transition through states A, B, and C
+        #20 dready = 1; // Trigger transition to state B
+        #20 dready = 0; // Trigger transition to state C
+        #20 dready = 1; // State machine will go back to state A
+
+        // Additional test cases can be added here
+
+        // Finish simulation
+        #100 $finish;
+    end
+
+    // Optional: Display state transitions for debugging
+    always @(posedge clk) begin
+      $display("Time = %t, State = %b,Next = %b, dready = %b, dreq = %b, rd = %b", $time, uut.PS,uut.NS, dready, dreq, rd);
+    end
+
+endmodule
