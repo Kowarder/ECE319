@@ -45,3 +45,15 @@ module task3_tb();
     end
 
 endmodule
+
+Time =                    5, State = 00,Next = 00, dready = 0, dreq = 1, rd = 0
+Time =                   15, State = 00,Next = 00, dready = 0, dreq = 1, rd = 0
+Time =                   25, State = 00,Next = 00, dready = 0, dreq = 1, rd = 0
+Time =                   35, State = 00,Next = 01, dready = 1, dreq = 1, rd = 0
+Time =                   45, State = 01,Next = 01, dready = 1, dreq = 0, rd = 0
+Time =                   55, State = 01,Next = 10, dready = 0, dreq = 0, rd = 0
+Time =                   65, State = 10,Next = 00, dready = 0, dreq = 0, rd = 1
+Time =                   75, State = 00,Next = 01, dready = 1, dreq = 1, rd = 0
+Time =                   85, State = 01,Next = 01, dready = 1, dreq = 0, rd = 0
+Time =                   95, State = 01,Next = 01, dready = 1, dreq = 0, rd = 0
+Time =                  105, State = 01,Next = 01, dready = 1, dreq = 0, rd = 0
