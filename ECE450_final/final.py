@@ -165,9 +165,9 @@ while(buttons[1].read() == 1):
             relays[0].write(0)
         else:
             relays[0].write(1)
-	lux = tag.lightmeter.read()
-    	# Assign the data to illumination
-    	illumination = abs(lux)
+        lux = tag.lightmeter.read()
+        illumination = abs(lux)
+
 
     PWM.set_duty_cycle("P9_16", 100)
     # Same as above
