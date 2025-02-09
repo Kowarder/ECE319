@@ -5,7 +5,7 @@ module trojan_testbench;
     integer i, detect_count, total_tests;
     reg detected;
 
-    // Instantiate Trojan-infected AES (DUT - Design Under Test)
+    // Instantiate Trojan-infected AES
     aes_128 aes_trojan (
         .clk(clk),
         .rst(rst),
@@ -14,7 +14,7 @@ module trojan_testbench;
         .out(trojan_output)
     );
 
-    // Instantiate Trojan-free AES as a reference model
+    // Instantiate Trojan-free AES
     aes_128_golden aes_original (
         .clk(clk),
         .rst(rst),
@@ -23,7 +23,6 @@ module trojan_testbench;
         .out(golden_output)
     );
 
-    // Clock generation
     always #5 clk = ~clk;
 
     initial begin
@@ -39,11 +38,11 @@ module trojan_testbench;
         #10 rst = 0;
 
         for (i = 0; i < total_tests; i = i + 1) begin
-            // Generate random test patterns
-            state = $random;
-            key = $random;
+
+            state = {$random, $random, $random, $random};
+   			key   = {$random, $random, $random, $random};
             
-            #20; // Wait for AES encryption to process
+            #20; 
 
             // Compare outputs
             if (trojan_output !== golden_output) begin
